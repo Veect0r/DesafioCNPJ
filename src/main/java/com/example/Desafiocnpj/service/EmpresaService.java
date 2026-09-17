@@ -25,7 +25,7 @@ public class EmpresaService {
         String cnpjLimpo = cnpjValidation.limparCnpj(cnpj);
 
         if (!cnpjValidation.isValidCnpj(cnpjLimpo)) {
-            return null;
+            throw new IllegalArgumentException("CNPJ inválido");
         }
 
         Optional<Empresa> empresaExistente = empresaRepository.findById(cnpjLimpo);
