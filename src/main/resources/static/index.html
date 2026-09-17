@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta CNPJ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .erro {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Consulta CNPJ</h1>
+    <input type="text" id="cnpj" placeholder="Digite o CNPJ (com ou sem formatação)">
+    <button onclick="buscar()">Buscar</button>
+    <div id="resultado"></div>
+
+    <script>
+        async function buscar() {
+            const cnpj = document.getElementById("cnpj").value;
+            const resultado = document.getElementById("resultado");
+
+            resultado.style.display = "block";
+            resultado.innerHTML = "Buscando...";
+
+            try {
+                const response = await fetch("http://localhost:8080/cnpj", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ cnpj: cnpj })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultado.innerHTML = `
+                        <p><strong>CNPJ:</strong> ${data.cnpj}</p>
+                        <p><strong>Razão Social:</strong> ${data.razaoSocial}</p>
+                        <p><strong>Nome Fantasia:</strong> ${data.nomeFantasia}</p>
+                        <p><strong>Situação:</strong> ${data.situacaoCadastral}</p>
+                        <p><strong>UF:</strong> ${data.uf}</p>
+                        <p><strong>Município:</strong> ${data.municipio}</p>
+                        <p><strong>Natureza Jurídica:</strong> ${data.naturezaJuridica}</p>
+                        <p><strong>Início Atividade:</strong> ${data.dataInicioAtividade}</p>
+                    `;
+                } else {
+                    resultado.innerHTML = `<p class="erro">${data.mensagem}</p>`;
+                }
+            } catch (error) {
+                resultado.innerHTML = `<p class="erro">Erro ao conectar com o servidor!</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
