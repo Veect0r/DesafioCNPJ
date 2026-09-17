@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.Desafiocnpj.model.dto.BrasilApiResponse;
-import com.example.Desafiocnpj.model.dto.SerasaApiResponse;
+import com.example.Desafiocnpj.model.api.BrasilApiResponse;
+import com.example.Desafiocnpj.model.api.SerasaApiResponse;
 import com.example.Desafiocnpj.model.entity.Empresa;
 import com.example.Desafiocnpj.repository.EmpresaRepository;
 import com.example.Desafiocnpj.validation.CnpjValidation;

@@ -48,10 +48,16 @@
 
     <script>
         async function buscar() {
-            const cnpj = document.getElementById("cnpj").value;
+            const cnpj = document.getElementById("cnpj").value.trim();
             const resultado = document.getElementById("resultado");
 
             resultado.style.display = "block";
+
+            if (!cnpj) {
+                resultado.innerHTML = `<p class="erro">Digite um CNPJ para pesquisar.</p>`;
+                return;
+            }
+
             resultado.innerHTML = "Buscando...";
 
             try {

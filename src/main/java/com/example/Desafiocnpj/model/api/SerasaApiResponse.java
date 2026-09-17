@@ -1,4 +1,4 @@
-package com.example.Desafiocnpj.model.dto;
+package com.example.Desafiocnpj.model.api;
 
 public record SerasaApiResponse(
         String businessDocument,

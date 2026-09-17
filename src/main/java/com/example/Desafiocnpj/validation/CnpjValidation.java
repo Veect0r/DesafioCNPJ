@@ -9,11 +9,12 @@ public class CnpjValidation {
     private static final int[] CNPJ_SECOND_WEIGHTS = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
     public String limparCnpj(String cnpj) {
-        return cnpj.replaceAll("[^a-zA-Z0-9]", "");
+        return cnpj == null ? "" : cnpj.replaceAll("[^a-zA-Z0-9]", "");
     }
 
     public boolean isValidCnpj(String cnpj) {
-        if (cnpj.chars().distinct().count() == 1) {
+        if (cnpj == null || cnpj.length() != 14 || !cnpj.chars().allMatch(Character::isDigit)
+                || cnpj.chars().distinct().count() == 1) {
             return false;
         }
 
